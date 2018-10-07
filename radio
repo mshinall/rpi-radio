@@ -23,6 +23,8 @@ mylcd = I2C_LCD_driver.lcd()
 factory = rpi_gpio.KeypadFactory()
 keypad = factory.create_keypad(keypad=MATRIX, row_pins=ROWS, col_pins=COLS)
 
+updateLcd()
+
 dev updateRadio():
     adjustFreq()
     print("updateRadio: freq=" + freq + " mode=" + mode)
@@ -65,22 +67,13 @@ def printKey(key):
 	if key == "#":
 		freq = freq[:len(freq) - 1]
 	elif key == "*":
-		lcd1 = lcd1 + "."
+		freq = freq + "."
 	elif key == "A":
 		updateRadio()
 	elif key == "B":
-		if lcd2 == "NFM":
-			lcd2 = "WFM"
-		elif lcd2 == "WFM":
-			lcd2 = "AM "
-		elif lcd2 == "AM ":
-			lcd2 = "LSB"
-		elif lcd2 == "LSB":
-			lcd2 = "USB"
-		elif lcd2 == "USB":
-			lcd2 = "NFM"
+        changeMode()
 	else:
-		lcd1 = lcd1 + key
+		freq = freq + key
 
 	updateLcd()
 
