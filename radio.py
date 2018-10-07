@@ -21,8 +21,8 @@ SEEKW = 0.0125
 MAX_FREQ = 1700.0000
 MIN_FREQ = 25.0000
 
-freq = 120.0000
-inFreq = "120.0000"
+freq = 162.4750
+inFreq = str(freq)
 midx = 0
 mode = MODES[midx]
 mname = MNAMES[midx]
