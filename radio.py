@@ -46,9 +46,10 @@ def updateRadio():
 
 def changeFreq():
 	global freq
+	freq = freqFloat()
 	if freq > MAX_FREQ:
 		freq = MAX_FREQ
-	elif iFreq < MIN_FREQ:
+	elif freq < MIN_FREQ:
 		freq = MIN_FREQ
 
 	updateLcd()
@@ -83,12 +84,14 @@ def updateLcd():
 
 def handleKeyPress(key):
 	global freq
+	global inFreq
 	global mode
 	global edit
 
 	if key == "#":
 		edit = True
-		freq = freq[:len(freq) - 1]
+		inFreq = inFreq[:len(inFreq) - 1]
+		freq = freqFloat
 		updateLcd()
 	elif key == "*":
 		edit = True
