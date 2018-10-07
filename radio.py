@@ -23,8 +23,6 @@ mylcd = I2C_LCD_driver.lcd()
 factory = rpi_gpio.KeypadFactory()
 keypad = factory.create_keypad(keypad=MATRIX, row_pins=ROWS, col_pins=COLS)
 
-updateLcd()
-
 def updateRadio():
 	adjustFreq()
 	print("updateRadio: freq=" + freq + " mode=" + mode)
@@ -77,7 +75,7 @@ def printKey(key):
 
 	updateLcd()
 
-
+updateLcd()
 keypad.registerKeyPressHandler(printKey)
 
 try:
