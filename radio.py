@@ -28,6 +28,7 @@ def updateRadio():
 	print("updateRadio: freq=" + freq + " mode=" + mode)
 
 def adjustFreq():
+	global freq
 	iFreq = int(freq)
 	if iFreq > 1700:
 		freq = "1700.0000"
@@ -37,6 +38,7 @@ def adjustFreq():
 	freq = freq[:10]
 
 def changeMode():
+	global midx
 	midx += 1
 	if midx > len(MODES):
 		midx = 0
@@ -58,7 +60,6 @@ def updateLcd():
 
 
 def printKey(key):
-	global mylcd
 	global freq
 	global mode
 
