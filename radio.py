@@ -42,7 +42,7 @@ def adjustFreq():
 def changeMode():
 	global midx
 	midx += 1
-	if midx => len(MODES):
+	if midx >= len(MODES):
 		midx = 0
 	elif midx < 0:
 		midx = len[MODES]
