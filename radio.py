@@ -44,7 +44,7 @@ def clearLcd():
 	mylcd.lcd_clear()
 
 def updateRadio():
-	print("updateRadio: freq=" + freqString() + " mode=" + mode + " bandwidth=" + mband)
+	print("updateRadio: freq=" + freqString() + " mode=" + mode + " bandwidth=" + str(mband))
 
 def changeFreq():
 	global freq
