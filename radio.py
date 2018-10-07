@@ -46,7 +46,6 @@ def updateRadio():
 
 def changeFreq():
 	global freq
-	freq = freqFloat()
 	if freq > MAX_FREQ:
 		freq = MAX_FREQ
 	elif freq < MIN_FREQ:
@@ -99,6 +98,7 @@ def handleKeyPress(key):
 		updateLcd()
 	elif key == "A":
 		edit = False
+		freq = freqFloat
 		changeFreq()
 	elif key == "B":
 		edit = False
@@ -106,10 +106,12 @@ def handleKeyPress(key):
 	elif key == "C":
 		edit = True
 		freq = freq + SEEKW
+		inFreq = freqString
 		updateLcd()
 	elif key == "D":
 		edit = True
 		freq = freq - SEEKW
+		inFreq = freqString
 		updateLcd()
 	else:
 		if edit == False:
