@@ -54,6 +54,7 @@ def updateLcd():
 	global mylcd
 	global freq
 	global mode
+	global edit
 
 	mylcd.lcd_clear()
 	mylcd.lcd_display_string(freq, 1, 0)
@@ -66,6 +67,7 @@ def updateLcd():
 def handleKeyPress(key):
 	global freq
 	global mode
+	global edit
 
 	if key == "#":
 		edit = True
