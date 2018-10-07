@@ -94,11 +94,11 @@ def handleKeyPress(key):
 		changeMode()
 	elif key == "C":
 		edit = True
-		freq = str(float(freq) + .0005)
+		freq = str(float(freq) + 12.5)
 		updateLcd()
 	elif key == "D":
 		edit = True
-		freq = str(float(freq) - .0005)
+		freq = str(float(freq) - 12.5)
 		updateLcd()
 	else:
 		if edit == False:
