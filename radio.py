@@ -24,6 +24,10 @@ mylcd = I2C_LCD_driver.lcd()
 factory = rpi_gpio.KeypadFactory()
 keypad = factory.create_keypad(keypad=MATRIX, row_pins=ROWS, col_pins=COLS)
 
+def clearLcd():
+	global mylcd
+	mylcd.lcd_clear()
+
 def updateRadio():
 	print("updateRadio: freq=" + freq + " mode=" + mode)
 
@@ -57,7 +61,7 @@ def updateLcd():
 	global mode
 	global edit
 
-	mylcd.lcd_clear()
+	clearLcd()
 	mylcd.lcd_display_string(freq, 1, 0)
 	mylcd.lcd_display_string("Mhz", 1, 13)
 	if edit == True:
@@ -104,3 +108,6 @@ try:
 except:
 	#print("keypad: cleaning up")
 	keypad.cleanup()
+	clearLcd()
+
+	
