@@ -15,6 +15,7 @@ COLS = [4,17,27,22]
 ROWS = [6,13,19,26]
 MODES = ["NFM", "WFM", "AM", "LSB", "USB"]
 MNAMES = ["Narrow FM", "Wide FM", "AM", "Lower SSB", "Upper SSB"]
+SEEKW = 0.0125
 
 freq = "120.0000"
 midx = 0
@@ -94,11 +95,11 @@ def handleKeyPress(key):
 		changeMode()
 	elif key == "C":
 		edit = True
-		freq = str(float(freq) + 12.5)
+		freq = str(float(freq) + SEEKW)
 		updateLcd()
 	elif key == "D":
 		edit = True
-		freq = str(float(freq) - 12.5)
+		freq = str(float(freq) - SEEKW)
 		updateLcd()
 	else:
 		if edit == False:
