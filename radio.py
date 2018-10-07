@@ -21,7 +21,7 @@ MAX_FREQ = 1700.0000
 MIN_FREQ = 25.0000
 
 freq = 120.0000
-inFreq = ""
+inFreq = "120.0000"
 midx = 0
 mode = MODES[midx]
 mname = MNAMES[midx]
