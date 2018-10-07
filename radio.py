@@ -13,11 +13,13 @@ MATRIX = [['1','2','3','A'],
 #BCM numbering
 COLS = [4,17,27,22]
 ROWS = [6,13,19,26]
-MODES = ["NFM", "WFM", "AM ", "LSB", "USB"]
+MODES = ["NFM", "WFM", "AM", "LSB", "USB"]
+MNAMES = ["Narrow FM", "Wide FM", "AM", "Lower SSB", "Upper SSB"]
 
 freq = "120.0000"
 midx = 0
 mode = MODES[midx]
+mname = MNAMES[midx]
 edit = False
 
 mylcd = I2C_LCD_driver.lcd()
@@ -45,10 +47,13 @@ def changeFreq():
 def changeMode():
 	global midx
 	global mode
+	global mname
+
 	midx += 1
 	if midx >= len(MODES):
 		midx = 0
 	mode = MODES[midx]
+	mname = MNAMES[midx]
 	updateLcd()
 	updateRadio()
 
@@ -63,7 +68,7 @@ def updateLcd():
 	mylcd.lcd_display_string("Mhz", 1, 13)
 	if edit == True:
 		mylcd.lcd_display_string("*", 2, 15)
-	mylcd.lcd_display_string(mode, 2, 0)
+	mylcd.lcd_display_string(mname, 2, 0)
 
 
 def handleKeyPress(key):
