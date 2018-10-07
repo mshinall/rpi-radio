@@ -64,6 +64,7 @@ def updateLcd():
 
 
 def handleKeyPress(key):
+	global freq
 	global mode
 
 	if key == "#":
