@@ -124,11 +124,10 @@ def handleKeyPress(key):
 		updateLcd()
 
 
-
-changeFreq()
-keypad.registerKeyPressHandler(handleKeyPress)
-
 try:
+	changeFreq()
+	keypad.registerKeyPressHandler(handleKeyPress)
+
 	while(True):
 		#print("keypad: sleeping...")
 		time.sleep(0.2)
