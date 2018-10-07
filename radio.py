@@ -16,6 +16,7 @@ COLS = [4,17,27,22]
 ROWS = [6,13,19,26]
 MODES = ["NFM", "WFM", "AM", "LSB", "USB"]
 MNAMES = ["Narrow FM", "Wide FM", "AM", "Lower SSB", "Upper SSB"]
+MBANDS = [12.5, 200, 200, 100, 100]
 SEEKW = 0.0125
 MAX_FREQ = 1700.0000
 MIN_FREQ = 25.0000
@@ -25,6 +26,7 @@ inFreq = "120.0000"
 midx = 0
 mode = MODES[midx]
 mname = MNAMES[midx]
+mband = MBANDS[midx]
 edit = False
 
 mylcd = I2C_LCD_driver.lcd()
@@ -42,7 +44,7 @@ def clearLcd():
 	mylcd.lcd_clear()
 
 def updateRadio():
-	print("updateRadio: freq=" + freqString() + " mode=" + mode)
+	print("updateRadio: freq=" + freqString() + " mode=" + mode + " bandwidth=" + mband)
 
 def changeFreq():
 	global freq
@@ -64,6 +66,7 @@ def changeMode():
 		midx = 0
 	mode = MODES[midx]
 	mname = MNAMES[midx]
+	mband = MBANDS[midx]
 	updateLcd()
 	updateRadio()
 
