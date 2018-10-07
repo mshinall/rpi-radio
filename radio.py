@@ -101,7 +101,7 @@ def handleKeyPress(key):
 
 
 
-updateLcd()
+changeFreq()
 keypad.registerKeyPressHandler(handleKeyPress)
 
 try:
