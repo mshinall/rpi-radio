@@ -38,7 +38,6 @@ def changeFreq():
 		freq = "1700.0000"
 	elif iFreq < 25:
 		freq = "25.0000"
-
 	freq = freq[:10]
 	updateLcd()
 	updateRadio()
@@ -48,9 +47,6 @@ def changeMode():
 	midx += 1
 	if midx >= len(MODES):
 		midx = 0
-	elif midx < 0:
-		midx = len[MODES]
-
 	mode = MODES[midx]
 	updateLcd()
 	updateRadio()
@@ -84,14 +80,13 @@ def handleKeyPress(key):
 		updateLcd()
 	elif key == "A":
 		edit = False
-		updateRadio()
+		changeFreq()
 	elif key == "B":
 		edit = False
 		changeMode()
 	else:
 		if edit == False:
 			freq = ""
-
 		edit = True
 		freq = freq + key
 		updateLcd()
@@ -109,5 +104,3 @@ except:
 	#print("keypad: cleaning up")
 	keypad.cleanup()
 	clearLcd()
-
-	
