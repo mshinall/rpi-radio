@@ -92,6 +92,12 @@ def handleKeyPress(key):
 	elif key == "B":
 		edit = False
 		changeMode()
+	elif key == "C":
+		edit = True
+		freq = str(float(freq) + .0005))
+	elif key == "D":
+		edit = True
+		freq = str(float(freq) - .0005))
 	else:
 		if edit == False:
 			freq = ""
