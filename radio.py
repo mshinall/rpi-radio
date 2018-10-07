@@ -41,7 +41,7 @@ def changeFreq():
 	elif iFreq < 25:
 		freq = "25.0000"
 
-	freq = '{:.4f}'.format(float(freq[:10])).rjust(9)
+	freq = freq[:10]
 
 	updateLcd()
 	updateRadio()
@@ -66,7 +66,7 @@ def updateLcd():
 	global edit
 
 	clearLcd()
-	mylcd.lcd_display_string(freq, 1, 0)
+	mylcd.lcd_display_string('{:.4f}'.format(float(freq[:10])).rjust(9), 1, 0)
 	mylcd.lcd_display_string("Mhz", 1, 13)
 	if edit == True:
 		mylcd.lcd_display_string("*", 2, 15)
