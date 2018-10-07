@@ -60,6 +60,7 @@ def changeMode():
 	global midx
 	global mode
 	global mname
+	global mband
 
 	midx += 1
 	if midx >= len(MODES):
