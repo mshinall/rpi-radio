@@ -56,26 +56,27 @@ def updateLcd():
 	global mode
 
 	mylcd.lcd_clear()
-	if edit == True:
-		mylcd.lcd_display_string(" " + freq, 1, 0)
-	else:
-		mylcd.lcd_display_string(">" + freq, 1, 0)
+	mylcd.lcd_display_string(freq, 1, 0)
 	mylcd.lcd_display_string("Mhz", 1, 13)
+	if edit == True:
+		mylcd.lcd_display_string("edit", 2, 12)
 	mylcd.lcd_display_string(mode, 2, 0)
 
 
-def printKey(key):
-	global freq
+def handleKeyPress():
 	global mode
 
 	if key == "#":
+		edit = True
 		freq = freq[:len(freq) - 1]
 	elif key == "*":
+		edit = True
 		freq = freq + "."
 	elif key == "A":
 		edit = False
 		updateRadio()
 	elif key == "B":
+		edit = True
 		changeMode()
 	else:
 		edit = True
@@ -84,7 +85,7 @@ def printKey(key):
 	updateLcd()
 
 updateLcd()
-keypad.registerKeyPressHandler(printKey)
+keypad.registerKeyPressHandler(handleKeyPress)
 
 try:
 	while(True):
