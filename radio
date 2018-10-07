@@ -25,11 +25,11 @@ keypad = factory.create_keypad(keypad=MATRIX, row_pins=ROWS, col_pins=COLS)
 
 updateLcd()
 
-dev updateRadio():
+def updateRadio():
     adjustFreq()
     print("updateRadio: freq=" + freq + " mode=" + mode)
 
-dev adjustFreq():
+def adjustFreq():
     iFreq = int(freq)
     if iFreq > 1700:
         freq = "1700.0000"
@@ -38,7 +38,7 @@ dev adjustFreq():
 
     freq = freq[:10]
 
-dev changeMode():
+def changeMode():
     midx += 1
     if midx > len(MODES):
         midx = 0
