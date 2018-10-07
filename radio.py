@@ -58,7 +58,7 @@ def updateLcd():
 	mylcd.lcd_clear()
 	if edit == True:
 		mylcd.lcd_display_string(" " + freq, 1, 0)
-	else
+	else:
 		mylcd.lcd_display_string(">" + freq, 1, 0)
 	mylcd.lcd_display_string("Mhz", 1, 13)
 	mylcd.lcd_display_string(mode, 2, 0)
