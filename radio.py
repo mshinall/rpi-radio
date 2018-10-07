@@ -63,7 +63,7 @@ def updateLcd():
 	mylcd.lcd_display_string(mode, 2, 0)
 
 
-def handleKeyPress():
+def handleKeyPress(key):
 	global mode
 
 	if key == "#":
