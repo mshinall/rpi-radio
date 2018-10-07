@@ -41,7 +41,7 @@ def changeFreq():
 	elif iFreq < 25:
 		freq = "25.0000"
 
-	freq = '{:.4f}'.format(freq[:10]).rjust(9)
+	freq = '{:.4f}'.format(float(freq[:10])).rjust(9)
 
 	updateLcd()
 	updateRadio()
