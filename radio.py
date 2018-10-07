@@ -4,6 +4,7 @@ import sys
 import I2C_LCD_driver
 from pad4pi import rpi_gpio
 import time
+from subprocess import call
 
 MATRIX = [['1','2','3','A'],
 		  ['4','5','6','B'],
@@ -16,8 +17,11 @@ ROWS = [6,13,19,26]
 MODES = ["NFM", "WFM", "AM", "LSB", "USB"]
 MNAMES = ["Narrow FM", "Wide FM", "AM", "Lower SSB", "Upper SSB"]
 SEEKW = 0.0125
+MAX_FREQ = 1700.0000
+MIN_FREQ = 25.0000
 
-freq = "120.0000"
+freq = 120.0000
+inFreq = ""
 midx = 0
 mode = MODES[midx]
 mname = MNAMES[midx]
@@ -27,22 +31,25 @@ mylcd = I2C_LCD_driver.lcd()
 factory = rpi_gpio.KeypadFactory()
 keypad = factory.create_keypad(keypad=MATRIX, row_pins=ROWS, col_pins=COLS)
 
+def freqString():
+	return '{:.4f}'.format(freq).rjust(9)
+
+def freqFloat():
+	return float(inFreq)
+
 def clearLcd():
 	global mylcd
 	mylcd.lcd_clear()
 
 def updateRadio():
-	print("updateRadio: freq=" + freq + " mode=" + mode)
+	print("updateRadio: freq=" + freqString() + " mode=" + mode)
 
 def changeFreq():
 	global freq
-	iFreq = int(float(freq))
-	if iFreq > 1700:
-		freq = "1700.0000"
-	elif iFreq < 25:
-		freq = "25.0000"
-
-	freq = freq[:10]
+	if freq > MAX_FREQ:
+		freq = MAX_FREQ
+	elif iFreq < MIN_FREQ:
+		freq = MIN_FREQ
 
 	updateLcd()
 	updateRadio()
@@ -67,7 +74,7 @@ def updateLcd():
 	global edit
 
 	clearLcd()
-	mylcd.lcd_display_string('{:.4f}'.format(float(freq[:10])).rjust(9), 1, 0)
+	mylcd.lcd_display_string(freqString(), 1, 0)
 	mylcd.lcd_display_string("Mhz", 1, 13)
 	if edit == True:
 		mylcd.lcd_display_string("*", 2, 15)
@@ -85,7 +92,7 @@ def handleKeyPress(key):
 		updateLcd()
 	elif key == "*":
 		edit = True
-		freq = freq + "."
+		inFreq = inFreq + "."
 		updateLcd()
 	elif key == "A":
 		edit = False
@@ -95,17 +102,17 @@ def handleKeyPress(key):
 		changeMode()
 	elif key == "C":
 		edit = True
-		freq = str(float(freq) + SEEKW)
+		freq = freq + SEEKW
 		updateLcd()
 	elif key == "D":
 		edit = True
-		freq = str(float(freq) - SEEKW)
+		freq = freq - SEEKW
 		updateLcd()
 	else:
 		if edit == False:
-			freq = ""
+			inFreq = ""
 		edit = True
-		freq = freq + key
+		inFreq = inFreq + key
 		updateLcd()
 
 
