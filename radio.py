@@ -46,13 +46,13 @@ def changeMode():
 		midx = len[MODES]
 
 	mode = MODES[midx]
+	updateLcd()
 
 def updateLcd():
 	global mylcd
 	global freq
 	global mode
 
-	adjustFreq()
 	mylcd.lcd_clear()
 	mylcd.lcd_display_string(freq, 1, 0)
 	mylcd.lcd_display_string("Mhz", 1, 13)
