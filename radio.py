@@ -18,6 +18,7 @@ MODES = ["NFM", "WFM", "AM ", "LSB", "USB"]
 freq = "120.0000"
 midx = 0
 mode = MODES[midx]
+edit = False
 
 mylcd = I2C_LCD_driver.lcd()
 factory = rpi_gpio.KeypadFactory()
@@ -25,6 +26,7 @@ keypad = factory.create_keypad(keypad=MATRIX, row_pins=ROWS, col_pins=COLS)
 
 def updateRadio():
 	adjustFreq()
+	updateLcd()
 	print("updateRadio: freq=" + freq + " mode=" + mode)
 
 def adjustFreq():
@@ -40,7 +42,7 @@ def adjustFreq():
 def changeMode():
 	global midx
 	midx += 1
-	if midx > len(MODES):
+	if midx => len(MODES):
 		midx = 0
 	elif midx < 0:
 		midx = len[MODES]
@@ -54,7 +56,10 @@ def updateLcd():
 	global mode
 
 	mylcd.lcd_clear()
-	mylcd.lcd_display_string(freq, 1, 0)
+	if edit == True:
+		mylcd.lcd_display_string(" " + freq, 1, 0)
+	else
+		mylcd.lcd_display_string(">" + freq, 1, 0)
 	mylcd.lcd_display_string("Mhz", 1, 13)
 	mylcd.lcd_display_string(mode, 2, 0)
 
@@ -68,10 +73,12 @@ def printKey(key):
 	elif key == "*":
 		freq = freq + "."
 	elif key == "A":
+		edit = False
 		updateRadio()
 	elif key == "B":
 		changeMode()
 	else:
+		edit = True
 		freq = freq + key
 
 	updateLcd()
