@@ -29,7 +29,7 @@ def updateRadio():
 
 def adjustFreq():
 	global freq
-	iFreq = int(freq)
+	iFreq = int(float(freq))
 	if iFreq > 1700:
 		freq = "1700.0000"
 	elif iFreq < 25:
