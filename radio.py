@@ -25,11 +25,9 @@ factory = rpi_gpio.KeypadFactory()
 keypad = factory.create_keypad(keypad=MATRIX, row_pins=ROWS, col_pins=COLS)
 
 def updateRadio():
-	adjustFreq()
-	updateLcd()
 	print("updateRadio: freq=" + freq + " mode=" + mode)
 
-def adjustFreq():
+def changeFreq():
 	global freq
 	iFreq = int(float(freq))
 	if iFreq > 1700:
@@ -38,6 +36,8 @@ def adjustFreq():
 		freq = "25.0000"
 
 	freq = freq[:10]
+	updateLcd()
+	updateRadio()
 
 def changeMode():
 	global midx
@@ -49,6 +49,7 @@ def changeMode():
 
 	mode = MODES[midx]
 	updateLcd()
+	updateRadio()
 
 def updateLcd():
 	global mylcd
@@ -72,20 +73,26 @@ def handleKeyPress(key):
 	if key == "#":
 		edit = True
 		freq = freq[:len(freq) - 1]
+		updateLcd()
 	elif key == "*":
 		edit = True
 		freq = freq + "."
+		updateLcd()
 	elif key == "A":
 		edit = False
 		updateRadio()
 	elif key == "B":
-		edit = True
+		edit = False
 		changeMode()
 	else:
+		if edit == False:
+			freq = ""
+
 		edit = True
 		freq = freq + key
+		updateLcd()
 
-	updateLcd()
+
 
 updateLcd()
 keypad.registerKeyPressHandler(handleKeyPress)
