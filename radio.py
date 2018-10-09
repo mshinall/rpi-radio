@@ -46,7 +46,7 @@ def clearLcd():
 
 def updateRadio():
 	print("updateRadio: freq=" + freqString() + " mode=" + mode + " bandwidth=" + str(mband))
-	call("bash -c \"SDR_CMD.format(freqString(), mband[midx])\")
+	call("SDR_CMD.format(freqString(), mband[midx])")
 
 def changeFreq():
 	global freq
