@@ -64,11 +64,12 @@ def changeMode():
 	global mode
 	global mname
 	global mband
+	global sdrMode
 
 	midx += 1
 	if midx >= len(MODES):
 		midx = 0
-	print(midx)
+
 	mode = MODES[midx]
 	mname = MNAMES[midx]
 	mband = MBANDS[midx]
