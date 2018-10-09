@@ -52,6 +52,7 @@ def updateRadio():
 	#call(SDR_CMD.format(sdrMode, freqString())
 	#print("updated")
 
+
 def changeFreq():
 	global freq
 	if freq > MAX_FREQ:
