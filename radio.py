@@ -135,9 +135,9 @@ try:
 	keypad.registerKeyPressHandler(handleKeyPress)
 
 	while(True):
-		#print("keypad: sleeping...")
+		print("keypad: sleeping...")
 		time.sleep(0.2)
 except:
-	#print("keypad: cleaning up")
+	print("keypad: cleaning up")
 	keypad.cleanup()
 	clearLcd()
