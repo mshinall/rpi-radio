@@ -21,7 +21,7 @@ MBANDS = [12.5, 200, 200, 100, 100]
 SEEKW = 0.0125
 MAX_FREQ = 1700.0000
 MIN_FREQ = 25.0000
-SDR_CMD = "rtl_fm -f {0}M -s {1} -r 48K - | aplay -t raw -r 48k -c 1 -f S16_LE"
+SDR_CMD = "rtl_fm -M {0} -f {1}M -s 200K -r 48K - | aplay -t raw -r 48000 -c 1 -f S16_LE"
 
 freq = 162.4750
 inFreq = str(freq)
@@ -47,8 +47,9 @@ def clearLcd():
 	mylcd.lcd_clear()
 
 def updateRadio():
-	print("updateRadio: freq=" + freqString() + " mode=" + mode + " bandwidth=" + str(mband))
-	call(SDR_CMD.format(freqString(), mband[midx]))
+	print("updateRadio: freq=" + freqString() + " mode=" + mode + ")
+	print(SDR_CMD.format(sdrMode, freqString())
+	call(SDR_CMD.format(sdrMode, freqString())
 	#print("updated")
 
 def changeFreq():
@@ -73,6 +74,7 @@ def changeMode():
 	mode = MODES[midx]
 	mname = MNAMES[midx]
 	mband = MBANDS[midx]
+	sdrMode = SDR_MODES[midx]
 	updateLcd()
 	updateRadio()
 
