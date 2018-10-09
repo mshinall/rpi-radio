@@ -20,6 +20,7 @@ MBANDS = [12.5, 200, 200, 100, 100]
 SEEKW = 0.0125
 MAX_FREQ = 1700.0000
 MIN_FREQ = 25.0000
+SDR_CMD = "rtl_fm -f {0}M -s {1} -r 48K - | aplay -t raw -r 48k -c 1 -f S16_LE"
 
 freq = 162.4750
 inFreq = str(freq)
@@ -45,6 +46,7 @@ def clearLcd():
 
 def updateRadio():
 	print("updateRadio: freq=" + freqString() + " mode=" + mode + " bandwidth=" + str(mband))
+	bash -c "SDR_CMD.format(freqString(), mband[midx])"
 
 def changeFreq():
 	global freq
