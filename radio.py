@@ -47,7 +47,7 @@ def clearLcd():
 	mylcd.lcd_clear()
 
 def updateRadio():
-	#print("updateRadio: freq=" + freqString() + " mode=" + mode + " bandwidth=" + str(mband))
+	print("updateRadio: freq=" + freqString() + " mode=" + mode + " bandwidth=" + str(mband))
 	call(SDR_CMD.format(freqString(), mband[midx]))
 	#print("updated")
 
