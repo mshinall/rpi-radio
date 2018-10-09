@@ -49,9 +49,6 @@ def clearLcd():
 def updateRadio():
 	print("updateRadio: freq=" + freqString() + " mode=" + mode)
 	print(SDR_CMD.format(sdrMode, freqString())
-	#call(SDR_CMD.format(sdrMode, freqString())
-	#print("updated")
-
 
 def changeFreq():
 	global freq
@@ -59,7 +56,6 @@ def changeFreq():
 		freq = MAX_FREQ
 	elif freq < MIN_FREQ:
 		freq = MIN_FREQ
-
 	updateLcd()
 	updateRadio()
 
