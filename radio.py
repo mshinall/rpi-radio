@@ -53,6 +53,7 @@ def clearLcd():
 def updateRadio():
 	print("updateRadio: freq=" + freqString() + " mode=" + mode)
 	print(SDR_CMD.format(sdrMode, freqString()))
+	call(["rtl_fm", "-M", sdrMode[midx], "-f", freqString + "M", "-s", "200K", "-r", "48K", "-", "|", "aplay", "-t", "raw", "-r", "48000", "-c", "1", "-f", "S16_LE"])
 
 def checkFreq():
 	global freq
