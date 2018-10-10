@@ -23,7 +23,7 @@ SEEKW = 0.0125
 MAX_FREQ = 1700.0000
 MIN_FREQ = 25.0000
 MAX_FREQ_LENGTH = 9
-SDR_CMD = "rtl_fm -M {0} -f {1}M -s 200K -l 1 -r 48K" # - " #| aplay -t raw -r 48000 -f S16_LE"
+SDR_CMD = "rtl_fm -f {1}M -M {0} -s 200K -l 1 -r 48K" # - " #| aplay -t raw -r 48000 -f S16_LE"
 
 freq = 162.4750
 inFreq = str(freq)
@@ -53,9 +53,10 @@ def clearLcd():
 
 def updateRadio():
 	#print("updateRadio: freq=" + freqString() + " mode=" + mode)
-	cmdString = SDR_CMD.format(sdrMode, str(freq))
-	print(cmdString)
+	cmdString = SDR_CMD.format(str(freq), sdrMode)
 	print(shlex.split(cmdString))
+	print(cmdString)
+
 	call(shlex.split(cmdString), shell=True)
 
 def checkFreq():
