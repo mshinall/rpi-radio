@@ -5,6 +5,7 @@ import I2C_LCD_driver
 from pad4pi import rpi_gpio
 import time
 from subprocess import call
+import shlex
 
 MATRIX = [['1','2','3','A'],
 		  ['4','5','6','B'],
@@ -52,8 +53,9 @@ def clearLcd():
 
 def updateRadio():
 	print("updateRadio: freq=" + freqString() + " mode=" + mode)
-	print(SDR_CMD.format(sdrMode, freqString()))
-	call(["rtl_fm", "-M", sdrMode[midx], "-f", freqString + "M", "-s", "200K", "-r", "48K", "-", "|", "aplay", "-t", "raw", "-r", "48000", "-c", "1", "-f", "S16_LE"])
+	cmdString = SDR_CMD.format(sdrMode, freqString())
+	print(cmdString)
+	call(shlex.split(cmdString))
 
 def checkFreq():
 	global freq
