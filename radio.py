@@ -63,7 +63,7 @@ def updateRadio():
 	if process != 0:
 		os.kill(process,signal.SIGINT)
 
-	process = Popen(shlex.split(cmdString), shell=True)
+	process = subprocess.Popen(shlex.split(cmdString), shell=True)
 
 def checkFreq():
 	global freq
