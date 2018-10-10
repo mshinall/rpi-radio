@@ -69,8 +69,8 @@ def updateRadio():
 	process2 = subprocess.Popen(shkex.split("aplay -t raw -r 48000 -f S16_LE /tmp/pipe"), shell=True)
 	"""
 
-	process1 = subprocess.Popen(shlex.split("rtl_fm -f {0}M -M {1} -s 200K -l 1 -r 48K"), bufsize =- 1, stdout=subprocess.PIPE)
-	process2 = subprocess.Popen(shkex.split("aplay -t raw -r 48000 -f S16_LE"), bufsize =- 1, stdin=process1.stdout)
+	process1 = subprocess.Popen(shlex.split("rtl_fm -f {0}M -M {1} -s 200K -l 1 -r 48K"), stdout=subprocess.PIPE)
+	process2 = subprocess.Popen(shkex.split("aplay -t raw -r 48000 -f S16_LE"), stdin=process1.stdout)
 
 def checkFreq():
 	global freq
