@@ -92,7 +92,6 @@ def updateLcd():
 
 	clearLcd()
 
-
 	if edit == True:
 		mylcd.lcd_display_string(inFreq, 1, 0)
 		mylcd.lcd_display_string("*", 1, 15)
