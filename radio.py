@@ -126,14 +126,14 @@ def handleKeyPress(key):
 		changeMode()
 	elif key == "C":
 		edit = True
-		freq = freq + SEEKW
 		if freq < MAX_FREQ:
+			freq = freq + SEEKW
 			inFreq = freqString()
 		updateLcd()
 	elif key == "D":
 		edit = True
-		freq = freq - SEEKW
 		if freq > MIN_FREQ:
+			freq = freq - SEEKW
 			inFreq = freqString()
 		updateLcd()
 	else:
