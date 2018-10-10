@@ -36,7 +36,8 @@ mname = MNAMES[midx]
 mband = MBANDS[midx]
 sdrMode = SDR_MODES[midx]
 edit = False
-process = 0
+process1 = 0
+process2 = 0
 
 mylcd = I2C_LCD_driver.lcd()
 factory = rpi_gpio.KeypadFactory()
@@ -56,18 +57,15 @@ def clearLcd():
 	mylcd.lcd_clear()
 
 def updateRadio():
-	global process
-	#print("updateRadio: freq=" + freqString() + " mode=" + mode)
-	cmdString1 = SDR_CMD1.format(str(freq), sdrMode)
-	cmdString2 = SDR_CMD2
-	print(cmdString1)
-	print(cmdString2)
-	#if process != 0:
-	#	process = int(subprocess.check_output(["pidof","rtl_fm"] ))
-	#	os.kill(process,signal.SIGINT)
+	global process1, process2
+	if process1 != 0:
+		os.kill(process1, signal.SIGINT)
+	if process2 != 0:
+		os.kill(process2, signal.SIGINT)		
 
-	pipe = subprocess.Popen(shlex.split(cmdString1), shell=True, stdout=subprocess.pipe)
-	subprocess.Popen(shkex.split(cmsString2), shell=True, stdin=pipe)
+	subprocess.Popen(shlex.split("mkfifo /tmp/pipe", shell=True))
+	subprocess.Popen(shlex.split("rtl_fm -f {0}M -M {1} -s 200K -l 1 -r 48K >> /tmp/pipe"), shell=True)
+	subprocess.Popen(shkex.split("aplay -t raw -r 48000 -f S16_LE /tmp/pipe"), shell=True)
 
 def checkFreq():
 	global freq
