@@ -108,7 +108,8 @@ def handleKeyPress(key):
 
 	if key == "#":
 		edit = True
-		inFreq = inFreq[:len(inFreq) - 1]
+		if len(inFreq) > 0:
+			inFreq = inFreq[:len(inFreq) - 1]
 		freq = inFreqFloat()
 		updateLcd()
 	elif key == "*":
@@ -126,12 +127,14 @@ def handleKeyPress(key):
 	elif key == "C":
 		edit = True
 		freq = freq + SEEKW
-		inFreq = freqString()
+		if freq < MAX_FREQ:
+			inFreq = freqString()
 		updateLcd()
 	elif key == "D":
 		edit = True
 		freq = freq - SEEKW
-		inFreq = freqString()
+		if freq > MIN_FREQ:
+			inFreq = freqString()
 		updateLcd()
 	else:
 		if edit == False:
