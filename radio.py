@@ -73,7 +73,7 @@ def checkFreq():
 		freq = MIN_FREQ
 
 def changeFreq():
-	checkFreq();
+	checkFreq()
 	updateLcd()
 	updateRadio()
 
