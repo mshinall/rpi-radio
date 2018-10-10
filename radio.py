@@ -52,7 +52,7 @@ def clearLcd():
 	mylcd.lcd_clear()
 
 def updateRadio():
-	print("updateRadio: freq=" + freqString() + " mode=" + mode)
+	#print("updateRadio: freq=" + freqString() + " mode=" + mode)
 	cmdString = SDR_CMD.format(sdrMode, str(freq))
 	print(cmdString)
 	call(shlex.split(cmdString), shell=True)
