@@ -113,7 +113,7 @@ def handleKeyPress(key):
 		updateLcd()
 	elif key == "A":
 		edit = False
-		freq = freqFloat()
+		freq = inFreqFloat()
 		changeFreq()
 	elif key == "B":
 		edit = False
