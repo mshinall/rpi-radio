@@ -108,7 +108,7 @@ def handleKeyPress(key):
 	if key == "#":
 		edit = True
 		inFreq = inFreq[:len(inFreq) - 1]
-		freq = freqFloat
+		freq = inFreqFloat()
 		updateLcd()
 	elif key == "*":
 		edit = True
