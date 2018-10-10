@@ -25,8 +25,6 @@ SEEKW = 0.0125
 MAX_FREQ = 1700.0000
 MIN_FREQ = 25.0000
 MAX_FREQ_LENGTH = 9
-SDR_CMD_1 = "rtl_fm -f {0}M -M {1} -s 200K -l 1 -r 48K"
-SDR_CMD_2 = "| aplay -t raw -r 48000 -f S16_LE"
 
 freq = 162.4750
 inFreq = str(freq)
@@ -58,7 +56,7 @@ def clearLcd():
 
 def updateRadio():
 	global process1, process2
-	
+
 	"""
 	if process1.pid != 0:
 		os.kill(process1.pid, signal.SIGINT)
@@ -73,7 +71,7 @@ def updateRadio():
 	"""
 
 	process1 = subprocess.Popen(shlex.split("rtl_fm -f {0}M -M {1} -s 200K -l 1 -r 48K"), stdout=subprocess.PIPE)
-	process2 = subprocess.Popen(shkex.split("aplay -t raw -r 48000 -f S16_LE"), stdin=process1.stdout)
+	#process2 = subprocess.Popen(shkex.split("aplay -t raw -r 48000 -f S16_LE"), stdin=process1.stdout)
 
 def checkFreq():
 	global freq
