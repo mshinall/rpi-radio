@@ -21,6 +21,7 @@ MBANDS = [12.5, 200, 200, 100, 100]
 SEEKW = 0.0125
 MAX_FREQ = 1700.0000
 MIN_FREQ = 25.0000
+MAX_FREQ_LENGTH = 9
 SDR_CMD = "rtl_fm -M {0} -f {1}M -s 200K -r 48K - | aplay -t raw -r 48000 -c 1 -f S16_LE"
 
 freq = 162.4750
@@ -136,7 +137,8 @@ def handleKeyPress(key):
 		if edit == False:
 			inFreq = ""
 		edit = True
-		inFreq = inFreq + key
+		if len(inFreq) < 9:
+			inFreq = inFreq + key
 		updateLcd()
 
 try:
