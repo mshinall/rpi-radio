@@ -39,7 +39,7 @@ keypad = factory.create_keypad(keypad=MATRIX, row_pins=ROWS, col_pins=COLS)
 def freqString():
 	return '{:.4f}'.format(freq).rjust(9)
 
-def freqFloat():
+def inFreqFloat():
 	return float(inFreq)
 
 def clearLcd():
@@ -84,10 +84,15 @@ def updateLcd():
 	global edit
 
 	clearLcd()
-	mylcd.lcd_display_string(freqString(), 1, 0)
-	mylcd.lcd_display_string("Mhz", 1, 13)
+
+
 	if edit == True:
+		mylcd.lcd_display_string(inFreq, 1, 0)
 		mylcd.lcd_display_string("*", 2, 15)
+	else:
+		mylcd.lcd_display_string(freqString(), 1, 0)
+
+	mylcd.lcd_display_string("Mhz", 1, 13)
 	mylcd.lcd_display_string(mname, 2, 0)
 
 
