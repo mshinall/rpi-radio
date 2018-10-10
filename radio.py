@@ -40,7 +40,10 @@ def freqString():
 	return '{:.4f}'.format(freq).rjust(9)
 
 def inFreqFloat():
-	return float(inFreq)
+	try:
+		return float(inFreq)
+	except:
+		return float(inFreq + ".0000")
 
 def clearLcd():
 	global mylcd
@@ -134,7 +137,6 @@ def handleKeyPress(key):
 		edit = True
 		inFreq = inFreq + key
 		updateLcd()
-
 
 try:
 	changeFreq()
