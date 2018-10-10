@@ -5,6 +5,8 @@ import I2C_LCD_driver
 from pad4pi import rpi_gpio
 import time
 from subprocess import call
+import signal
+import os
 import shlex
 
 MATRIX = [['1','2','3','A'],
@@ -33,6 +35,7 @@ mname = MNAMES[midx]
 mband = MBANDS[midx]
 sdrMode = SDR_MODES[midx]
 edit = False
+process = 0
 
 mylcd = I2C_LCD_driver.lcd()
 factory = rpi_gpio.KeypadFactory()
@@ -52,12 +55,15 @@ def clearLcd():
 	mylcd.lcd_clear()
 
 def updateRadio():
+	global process
 	#print("updateRadio: freq=" + freqString() + " mode=" + mode)
 	cmdString = SDR_CMD.format(str(freq), sdrMode)
 	print(shlex.split(cmdString))
 	print(cmdString)
+	if process != 0:
+		os.kill(process,signal.SIGINT)
 
-	call(shlex.split(cmdString), shell=True)
+	process = Popen(shlex.split(cmdString), shell=True)
 
 def checkFreq():
 	global freq
@@ -72,11 +78,7 @@ def changeFreq():
 	updateRadio()
 
 def changeMode():
-	global midx
-	global mode
-	global mname
-	global mband
-	global sdrMode
+	global midx, mode, mname, mband, sdrMode
 
 	midx += 1
 	if midx >= len(MODES):
@@ -90,10 +92,7 @@ def changeMode():
 	updateRadio()
 
 def updateLcd():
-	global mylcd
-	global freq
-	global mode
-	global edit
+	global mylcd, freq, mode, edit
 
 	clearLcd()
 
@@ -108,10 +107,7 @@ def updateLcd():
 
 
 def handleKeyPress(key):
-	global freq
-	global inFreq
-	global mode
-	global edit
+	global freq, inFreq, mode, edit
 
 	if key == "#":
 		edit = True
