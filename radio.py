@@ -54,12 +54,15 @@ def updateRadio():
 	print("updateRadio: freq=" + freqString() + " mode=" + mode)
 	print(SDR_CMD.format(sdrMode, freqString()))
 
-def changeFreq():
+def checkFreq():
 	global freq
 	if freq > MAX_FREQ:
 		freq = MAX_FREQ
 	elif freq < MIN_FREQ:
 		freq = MIN_FREQ
+
+def changeFreq():
+	checkFreq();
 	updateLcd()
 	updateRadio()
 
@@ -126,15 +129,15 @@ def handleKeyPress(key):
 		changeMode()
 	elif key == "C":
 		edit = True
-		if freq < MAX_FREQ - SEEKW:
-			freq = freq + SEEKW
-			inFreq = freqString()
+		freq = freq + SEEKW
+		checkFreq()
+		inFreq = freqString()
 		updateLcd()
 	elif key == "D":
 		edit = True
-		if freq > MIN_FREQ + SEEKW:
-			freq = freq - SEEKW
-			inFreq = freqString()
+		freq = freq - SEEKW
+		checkFreq()
+		inFreq = freqString()
 		updateLcd()
 	else:
 		if edit == False:
