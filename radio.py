@@ -112,48 +112,90 @@ def updateLcd():
 	mylcd.lcd_display_string("MHz", 1, 10)
 	mylcd.lcd_display_string(mname, 2, 0)
 
+def numericEntry(key):
+	global edit, inFreq
+	if edit == False:
+		inFreq = ""
+	edit = True
+	if len(inFreq) < 9:
+		inFreq = inFreq + key
+	updateLcd()
 
+def decimalEntry(key):
+	global edit, inFreq
+	edit = True
+	if "." not in inFreq:
+		inFreq = inFreq + "."
+	updateLcd()
+
+def backspaceEntry(key):
+	global edit, inFreq, freq
+	edit = True
+	if len(inFreq) > 0:
+		inFreq = inFreq[:len(inFreq) - 1]
+	freq = inFreqFloat()
+	updateLcd()
+
+def changeFreqEntry(key):
+	global edit, freq
+	edit = False
+	freq = inFreqFloat()
+	changeFreq()
+
+def changeModeEntry(key):
+	global edit
+	edit = False
+	changeMode()
+
+def seekUpEntry(key):
+	global edit, freq, inFreq
+	edit = True
+	freq = freq + SEEKW
+	checkFreq()
+	inFreq = freqString()
+	updateLcd()
+
+def seekDownEntry(key):
+	global edit, freq, inFreq
+	edit = True
+	freq = freq - SEEKW
+	checkFreq()
+	inFreq = freqString()
+	updateLcd()
+
+keyMap = {
+	"#": backspaceEntry,
+	"*": decimalEntry,
+	"A": changeFreqEntry,
+	"B": changeModeEntry,
+	"C": seekUpEntry,
+	"D": seekDownEntry
+}
 def handleKeyPress(key):
+	if key in keyMap:
+		handler = keyMap[key]
+	else:
+		handler = numericEntry
+	handler(key);
+
+	"""
 	global freq, inFreq, mode, edit
 
 	if key == "#":
-		edit = True
-		if len(inFreq) > 0:
-			inFreq = inFreq[:len(inFreq) - 1]
-		freq = inFreqFloat()
-		updateLcd()
+		backspaceEntry()
 	elif key == "*":
-		edit = True
-		if "." not in inFreq:
-			inFreq = inFreq + "."
-		updateLcd()
+		decimalEntry()
 	elif key == "A":
-		edit = False
-		freq = inFreqFloat()
-		changeFreq()
+		changeFreqEntry()
 	elif key == "B":
-		edit = False
-		changeMode()
+		changeModeEntry()
 	elif key == "C":
-		edit = True
-		freq = freq + SEEKW
-		checkFreq()
-		inFreq = freqString()
-		updateLcd()
+		seekUpEntry()
 	elif key == "D":
-		edit = True
-		freq = freq - SEEKW
-		checkFreq()
-		inFreq = freqString()
-		updateLcd()
+		seekDownEntry()
 	else:
-		if edit == False:
-			inFreq = ""
-		edit = True
-		if len(inFreq) < 9:
-			inFreq = inFreq + key
-		updateLcd()
-
+		numericEntry(key)
+	"""
 try:
 	changeFreq()
 	keypad.registerKeyPressHandler(handleKeyPress)
