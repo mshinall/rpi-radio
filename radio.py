@@ -61,11 +61,11 @@ def updateRadio():
 	if process1 != 0:
 		os.kill(process1, signal.SIGINT)
 	if process2 != 0:
-		os.kill(process2, signal.SIGINT)		
+		os.kill(process2, signal.SIGINT)
 
 	subprocess.Popen(shlex.split("mkfifo /tmp/pipe", shell=True))
-	subprocess.Popen(shlex.split("rtl_fm -f {0}M -M {1} -s 200K -l 1 -r 48K >> /tmp/pipe"), shell=True)
-	subprocess.Popen(shkex.split("aplay -t raw -r 48000 -f S16_LE /tmp/pipe"), shell=True)
+	process1 = subprocess.Popen(shlex.split("rtl_fm -f {0}M -M {1} -s 200K -l 1 -r 48K >> /tmp/pipe"), shell=True)
+	process2 = subprocess.Popen(shkex.split("aplay -t raw -r 48000 -f S16_LE /tmp/pipe"), shell=True)
 
 def checkFreq():
 	global freq
