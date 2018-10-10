@@ -171,6 +171,7 @@ keyMap = {
 	"C": seekUpEntry,
 	"D": seekDownEntry
 }
+
 def handleKeyPress(key):
 	if key in keyMap:
 		handler = keyMap[key]
