@@ -4,7 +4,7 @@ import sys
 import I2C_LCD_driver
 from pad4pi import rpi_gpio
 import time
-from subprocess import call
+import subprocess
 import signal
 import os
 import shlex
@@ -63,9 +63,14 @@ def updateRadio():
 	if process2 != 0:
 		os.kill(process2, signal.SIGINT)
 
+	"""
 	subprocess.Popen(shlex.split("mkfifo /tmp/pipe", shell=True))
 	process1 = subprocess.Popen(shlex.split("rtl_fm -f {0}M -M {1} -s 200K -l 1 -r 48K >> /tmp/pipe"), shell=True)
 	process2 = subprocess.Popen(shkex.split("aplay -t raw -r 48000 -f S16_LE /tmp/pipe"), shell=True)
+	"""
+
+	process1 = subprocess.Popen(shlex.split("rtl_fm -f {0}M -M {1} -s 200K -l 1 -r 48K"), bufsize =- 1, stdout=subprocess.PIPE)
+	process2 = subprocess.Popen(shkex.split("aplay -t raw -r 48000 -f S16_LE", bufsize =- 1, stdin=process1.stdout)
 
 def checkFreq():
 	global freq
