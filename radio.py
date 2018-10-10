@@ -112,7 +112,8 @@ def handleKeyPress(key):
 		updateLcd()
 	elif key == "*":
 		edit = True
-		inFreq = inFreq + "."
+		if "." not in inFreq:
+			inFreq = inFreq + "."
 		updateLcd()
 	elif key == "A":
 		edit = False
