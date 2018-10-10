@@ -55,6 +55,7 @@ def updateRadio():
 	#print("updateRadio: freq=" + freqString() + " mode=" + mode)
 	cmdString = SDR_CMD.format(sdrMode, str(freq))
 	print(cmdString)
+	print(shlex.split(cmdString))
 	call(shlex.split(cmdString), shell=True)
 
 def checkFreq():
