@@ -91,11 +91,11 @@ def updateLcd():
 
 	if edit == True:
 		mylcd.lcd_display_string(inFreq, 1, 0)
-		mylcd.lcd_display_string("*", 2, 15)
+		mylcd.lcd_display_string("*", 1, 15)
 	else:
 		mylcd.lcd_display_string(freqString(), 1, 0)
 
-	mylcd.lcd_display_string("Mhz", 1, 13)
+	mylcd.lcd_display_string("MHz", 1, 10)
 	mylcd.lcd_display_string(mname, 2, 0)
 
 
