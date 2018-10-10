@@ -61,6 +61,7 @@ def updateRadio():
 	print(shlex.split(cmdString))
 	print(cmdString)
 	if process != 0:
+		process = int(subprocess.check_output(["pidof","rtl_fm"] ))
 		os.kill(process,signal.SIGINT)
 
 	process = subprocess.Popen(shlex.split(cmdString), shell=True)
