@@ -58,10 +58,10 @@ def clearLcd():
 
 def updateRadio():
 	global process1, process2
-	if process1 != 0:
-		os.kill(process1, signal.SIGINT)
-	if process2 != 0:
-		os.kill(process2, signal.SIGINT)
+	if process1.pid != 0:
+		os.kill(process1.pid, signal.SIGINT)
+	if process2.pid != 0:
+		os.kill(process2.pid, signal.SIGINT)
 
 	"""
 	subprocess.Popen(shlex.split("mkfifo /tmp/pipe", shell=True))
