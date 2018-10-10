@@ -4,7 +4,7 @@ import sys
 import I2C_LCD_driver
 from pad4pi import rpi_gpio
 import time
-from subprocess import run
+from subprocess import call
 import shlex
 
 MATRIX = [['1','2','3','A'],
@@ -57,7 +57,7 @@ def updateRadio():
 	print(shlex.split(cmdString))
 	print(cmdString)
 
-	run(shlex.split(cmdString), shell=True)
+	call(shlex.split(cmdString), shell=True)
 
 def checkFreq():
 	global freq
