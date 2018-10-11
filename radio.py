@@ -20,6 +20,7 @@ ROWS = [6,13,19,26]
 MODES = ["NFM", "WFM", "AM", "LSB", "USB"]
 MNAMES = ["Narrow FM", "Wide FM", "AM", "Lower SSB", "Upper SSB"]
 SDR_MODES = ["fm", "wbfm", "am", "lsb", "usb"]
+UDP_MODES = ["0", "0", "1", "3", "2"]
 MBANDS = [12.5, 200, 200, 100, 100]
 SEEKW = 0.0125
 MAX_FREQ = 1700.0000
@@ -33,6 +34,7 @@ mode = MODES[midx]
 mname = MNAMES[midx]
 mband = MBANDS[midx]
 sdrMode = SDR_MODES[midx]
+udbMode = UDB_MODES[midx]
 edit = False
 process1 = 0
 process2 = 0
@@ -54,28 +56,6 @@ def clearLcd():
 	global mylcd
 	mylcd.lcd_clear()
 
-def updateRadio():
-	global process1, process2
-
-	"""
-	if process1.pid != 0:
-		os.kill(process1.pid, signal.SIGINT)
-	if process2.pid != 0:
-		os.kill(process2.pid, signal.SIGINT)
-
-	subprocess.Popen(shlex.split("mkfifo /tmp/pipe", shell=True))
-	process1 = subprocess.Popen(shlex.split("rtl_fm -f {0}M -M {1} -s 200K -l 1 -r 48K >> /tmp/pipe"), shell=True)
-	process2 = subprocess.Popen(shkex.split("aplay -t raw -r 48000 -f S16_LE /tmp/pipe"), shell=True)
-
-	str1 = "rtl_fm -f " + freqString() + "M -M " + SDR_MODES[midx] + " -s 200K -l 1 -r 48K"
-	str2 = "aplay -t raw -r 48000 -f S16_LE"
-	print(str1 + " | " + str2)
-
-	process1 = subprocess.Popen(shlex.split(str1), stdout=subprocess.PIPE)
-	process2 = subprocess.Popen(shkex.split(str2), stdin=process1.stdout)
-	"""
-	subprocess.Popen(shlex.split("/home/pi/rpi-radio/rtl_sdr_tune.sh " + freqString() + " " + SDR_MODES[midx]))
-
 def checkFreq():
 	global freq
 	if freq > MAX_FREQ:
@@ -86,10 +66,10 @@ def checkFreq():
 def changeFreq():
 	checkFreq()
 	updateLcd()
-	updateRadio()
+	os.system("udpclient.py freq " + int(freq * 1000))
 
 def changeMode():
-	global midx, mode, mname, mband, sdrMode
+	global midx, mode, mname, mband, sdrMode, udbMode
 
 	midx += 1
 	if midx >= len(MODES):
@@ -99,8 +79,9 @@ def changeMode():
 	mname = MNAMES[midx]
 	mband = MBANDS[midx]
 	sdrMode = SDR_MODES[midx]
+	udbMode = UDB_MODES[midx]
 	updateLcd()
-	updateRadio()
+	os.system("udpclient.py mode " + udbMode)
 
 def updateLcd():
 	global mylcd, freq, mode, edit
@@ -202,9 +183,11 @@ def handleKeyPress(key):
 		numericEntry(key)
 	"""
 try:
-	changeFreq()
-	keypad.registerKeyPressHandler(handleKeyPress)
+	checkFreq()
+	updateLcd()
+	os.system("rtl_udp -f " + freqString() + "M -M " + SDR_MODES[midx] + " -s 200K -l 1 -r 48K | aplay -t raw -r 48000 -f S16_LE")
 
+	keypad.registerKeyPressHandler(handleKeyPress)
 	while(True):
 		#print("keypad: sleeping...")
 		time.sleep(0.2)
