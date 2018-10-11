@@ -187,14 +187,16 @@ def handleKeyPress(key):
 try:
 	checkFreq()
 	updateLcd()
+
+	keypad.registerKeyPressHandler(handleKeyPress)
 	cmd = "rtl_udp -f " + freqString() + "M -M " + SDR_MODES[midx] + " -s 200K -l 1 -r 48K | aplay -t raw -r 48000 -f S16_LE"
 	print(cmd)
 	os.system(cmd)
-
-	keypad.registerKeyPressHandler(handleKeyPress)
+	"""
 	while(True):
 		#print("keypad: sleeping...")
 		time.sleep(0.2)
+	"""
 except:
 	#print("keypad: cleaning up")
 	keypad.cleanup()
