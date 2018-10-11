@@ -66,7 +66,7 @@ def checkFreq():
 def changeFreq():
 	checkFreq()
 	updateLcd()
-	os.system("udpclient.py freq " + int(freq * 100000))
+	os.system("udpclient.py freq " + str(int(freq * 100000)))
 
 def changeMode():
 	global midx, mode, mname, mband, sdrMode, udpMode
