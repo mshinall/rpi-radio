@@ -21,7 +21,7 @@ MODES = ["NFM", "WFM", "AM", "LSB", "USB"]
 MNAMES = ["Narrow FM", "Wide FM", "AM", "Lower SSB", "Upper SSB"]
 SDR_MODES = ["fm", "wbfm", "am", "lsb", "usb"]
 UDP_MODES = ["0", "0", "1", "3", "2"]
-UDB_FLAGS = ["N", "W", "M", "L", "U"]
+UDP_FLAGS = ["N", "W", "M", "L", "U"]
 MBANDS = [12.5, 200, 200, 100, 100]
 SEEKW = 0.0125
 MAX_FREQ = 1700.0000
@@ -69,6 +69,7 @@ def changeFreq():
 	checkFreq()
 	updateLcd()
 	cmd = os.getcwd() + "/udpclient.py freq " + str(int(freq * 100000))
+	print(cmd)
 	os.system(cmd)
 
 def changeMode():
