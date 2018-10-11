@@ -9,10 +9,10 @@ import signal
 import os
 import shlex
 
-MATRIX = [['1','2','3','A'],
-		  ['4','5','6','B'],
-		  ['7','8','9','C'],
-		  ['*','0','#','D']]
+MATRIX = [['1', '2', '3', 'A'],
+		  ['4', '5', '6', 'B'],
+		  ['7', '8', '9', 'C'],
+		  ['*', '0', '#', 'D']]
 
 #BCM numbering
 COLS = [4,17,27,22]
@@ -34,7 +34,7 @@ mode = MODES[midx]
 mname = MNAMES[midx]
 mband = MBANDS[midx]
 sdrMode = SDR_MODES[midx]
-udbMode = UDB_MODES[midx]
+udpMode = UDP_MODES[midx]
 edit = False
 process1 = 0
 process2 = 0
@@ -66,10 +66,10 @@ def checkFreq():
 def changeFreq():
 	checkFreq()
 	updateLcd()
-	os.system("udpclient.py freq " + int(freq * 1000))
+	os.system("udpclient.py freq " + int(freq * 100000))
 
 def changeMode():
-	global midx, mode, mname, mband, sdrMode, udbMode
+	global midx, mode, mname, mband, sdrMode, udpMode
 
 	midx += 1
 	if midx >= len(MODES):
@@ -79,9 +79,9 @@ def changeMode():
 	mname = MNAMES[midx]
 	mband = MBANDS[midx]
 	sdrMode = SDR_MODES[midx]
-	udbMode = UDB_MODES[midx]
+	udpMode = UDP_MODES[midx]
 	updateLcd()
-	os.system("udpclient.py mode " + udbMode)
+	os.system("udpclient.py mode " + udpMode)
 
 def updateLcd():
 	global mylcd, freq, mode, edit
