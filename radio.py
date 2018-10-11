@@ -74,7 +74,7 @@ def updateRadio():
 	process1 = subprocess.Popen(shlex.split(str1), stdout=subprocess.PIPE)
 	process2 = subprocess.Popen(shkex.split(str2), stdin=process1.stdout)
 	"""
-	subprocess.Popen(shlex.split("rtl_sdr_tune " + freqString() + " " + SDR_MODES[midx]))
+	subprocess.Popen(shlex.split("/home/pi/rpi-radio/rtl_sdr_tune.sh " + freqString() + " " + SDR_MODES[midx]))
 
 def checkFreq():
 	global freq
