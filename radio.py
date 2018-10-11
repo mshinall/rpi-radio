@@ -81,7 +81,9 @@ def changeMode():
 	sdrMode = SDR_MODES[midx]
 	udpMode = UDP_MODES[midx]
 	updateLcd()
-	os.system("udpclient.py mode " + udpMode)
+	cmd = "udpclient.py mode " + udpMode
+	print(cmd)
+	os.system(cmd)
 
 def updateLcd():
 	global mylcd, freq, mode, edit
@@ -185,7 +187,9 @@ def handleKeyPress(key):
 try:
 	checkFreq()
 	updateLcd()
-	os.system("rtl_udp -f " + freqString() + "M -M " + SDR_MODES[midx] + " -s 200K -l 1 -r 48K | aplay -t raw -r 48000 -f S16_LE")
+	cmd = "rtl_udp -f " + freqString() + "M -M " + SDR_MODES[midx] + " -s 200K -l 1 -r 48K | aplay -t raw -r 48000 -f S16_LE"
+	print(cmd)
+	os.system(cmd)
 
 	keypad.registerKeyPressHandler(handleKeyPress)
 	while(True):
