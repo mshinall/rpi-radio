@@ -24,6 +24,6 @@ pip install \
 
 git clone https://github.com/sysrun/rtl-sdr.git
 cd rtl-sdr
-cmake ../
+cmake ../ -DINSTALL_UDEV_RULES=ON -DDETACH_KERNEL_DRIVER=ON
 make
 sudo make install
