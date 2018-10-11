@@ -21,6 +21,7 @@ MODES = ["NFM", "WFM", "AM", "LSB", "USB"]
 MNAMES = ["Narrow FM", "Wide FM", "AM", "Lower SSB", "Upper SSB"]
 SDR_MODES = ["fm", "wbfm", "am", "lsb", "usb"]
 UDP_MODES = ["0", "0", "1", "3", "2"]
+UDB_FLAGS = ["N", "W", "M", "L", "U"]
 MBANDS = [12.5, 200, 200, 100, 100]
 SEEKW = 0.0125
 MAX_FREQ = 1700.0000
@@ -35,6 +36,7 @@ mname = MNAMES[midx]
 mband = MBANDS[midx]
 sdrMode = SDR_MODES[midx]
 udpMode = UDP_MODES[midx]
+udpFlag = UDP_FLAGS[midx]
 edit = False
 process1 = 0
 process2 = 0
@@ -70,7 +72,7 @@ def changeFreq():
 	os.system(cmd)
 
 def changeMode():
-	global midx, mode, mname, mband, sdrMode, udpMode
+	global midx, mode, mname, mband, sdrMode, udpMode, udpFlag
 
 	midx += 1
 	if midx >= len(MODES):
@@ -81,6 +83,7 @@ def changeMode():
 	mband = MBANDS[midx]
 	sdrMode = SDR_MODES[midx]
 	udpMode = UDP_MODES[midx]
+	udpFlag = UDP_FLAGS[midx]
 	updateLcd()
 	cmd = os.getcwd() + "/udpclient.py mode " + udpMode
 	print(cmd)
@@ -190,7 +193,7 @@ try:
 	updateLcd()
 
 	keypad.registerKeyPressHandler(handleKeyPress)
-	cmd = "rtl_udp -f " + freqString() + "M -M " + SDR_MODES[midx] + " -s 200K -l 1 -r 48K | aplay -t raw -r 48000 -f S16_LE"
+	cmd = "rtl_udp -f " + freqString() + "M -" + udpFlag + " -s 200K -l 1 -r 48K | aplay -t raw -r 48000 -f S16_LE"
 	print(cmd)
 	os.system(cmd)
 	"""
