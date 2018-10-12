@@ -74,7 +74,7 @@ def checkFreq():
 def changeFreq():
 	checkFreq()
 	updateLcd()
-	cmd = os.getcwd() + "/udpclient.py freq " + str(int(freq * 100000))
+	cmd = os.getcwd() + "/udpclient.py freq " + str(int(freq * 1000000))
 	print(cmd)
 	os.system(cmd)
 
