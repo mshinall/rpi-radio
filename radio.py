@@ -17,7 +17,7 @@ MATRIX = [['1', '2', '3', 'A'],
 #BCM numbering
 COLS = [4,17,27,22]
 ROWS = [6,13,19,26]
-MODES = ["NFM", "WFM", "AM", "LSB", "USB"]
+MODES = ["NFM", "WFM", " AM", "LSB", "USB"]
 MNAMES = ["Narrow FM", "Wide FM", "AM", "Lower SSB", "Upper SSB"]
 SDR_MODES = ["fm", "wbfm", "am", "lsb", "usb"]
 UDP_MODES = ["0", "0", "1", "3", "2"]
@@ -114,7 +114,7 @@ def updateLcd():
 	else:
 		mylcd.lcd_display_string(freqString(), 1, 0)
 	mylcd.lcd_display_string("MHz", 1, 10)
-	mylcd.lcd_display_string(mname, 2, 0)
+	mylcd.lcd_display_string(mode, 2, 0)
 	mylcd.lcd_display_string("s"+str(sql).zfill(2), 2, 4)
 	mylcd.lcd_display_string("g"+str(gain).zfill(2), 2, 8)
 	mylcd.lcd_display_string(cmode, 2, 15)
