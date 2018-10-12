@@ -27,6 +27,7 @@ SEEKW = 0.0125
 MAX_FREQ = 1700.0000
 MIN_FREQ = 25.0000
 MAX_FREQ_LENGTH = 9
+CTL_MODES = ["F", "M", "S", "G", "A"]
 
 freq = 162.4750
 inFreq = str(freq)
@@ -40,6 +41,11 @@ udpFlag = UDP_FLAGS[midx]
 edit = False
 process1 = 0
 process2 = 0
+cidx = 0
+cmode = CTL_MODES[cidx]
+sql = 0
+gain = 0
+agc = True
 
 mylcd = I2C_LCD_driver.lcd()
 factory = rpi_gpio.KeypadFactory()
@@ -72,10 +78,10 @@ def changeFreq():
 	print(cmd)
 	os.system(cmd)
 
-def changeMode():
+def changeMode(step):
 	global midx, mode, mname, mband, sdrMode, udpMode, udpFlag
 
-	midx += 1
+	midx += step
 	if midx >= len(MODES):
 		midx = 0
 
@@ -90,19 +96,28 @@ def changeMode():
 	print(cmd)
 	os.system(cmd)
 
+"""
+def changeCtlMode(step):
+	global cidx, cmode
+	cidx += step
+	if cidx >= len(CTL_MODES):
+		cidx = 0
+	cmode = CTL_MODES[cidx]
+	updateLcd()
+"""
+
 def updateLcd():
-	global mylcd, freq, mode, edit
-
 	clearLcd()
-
 	if edit == True:
 		mylcd.lcd_display_string(inFreq, 1, 0)
 		mylcd.lcd_display_string("*", 1, 15)
 	else:
 		mylcd.lcd_display_string(freqString(), 1, 0)
-
 	mylcd.lcd_display_string("MHz", 1, 10)
 	mylcd.lcd_display_string(mname, 2, 0)
+	mylcd.lcd_display_string("s"+str(sql).zfill(2), 2, 4)
+	mylcd.lcd_display_string("g"+str(gain).zfill(2), 2, 8)
+	mylcd.lcd_display_string(cmode, 2, 15)
 
 def numericEntry(key):
 	global edit, inFreq
@@ -137,23 +152,23 @@ def changeFreqEntry(key):
 def changeModeEntry(key):
 	global edit
 	edit = False
-	changeMode()
+	changeMode(1)
 
 def seekUpEntry(key):
 	global edit, freq, inFreq
-	edit = True
+	edit = False
 	freq = freq + SEEKW
 	checkFreq()
 	inFreq = freqString()
-	updateLcd()
+	changeFreq()
 
 def seekDownEntry(key):
 	global edit, freq, inFreq
-	edit = True
+	edit = False
 	freq = freq - SEEKW
 	checkFreq()
 	inFreq = freqString()
-	updateLcd()
+	changeFreq()
 
 keyMap = {
 	"#": backspaceEntry,
@@ -171,24 +186,6 @@ def handleKeyPress(key):
 		handler = numericEntry
 	handler(key);
 
-	"""
-	global freq, inFreq, mode, edit
-
-	if key == "#":
-		backspaceEntry()
-	elif key == "*":
-		decimalEntry()
-	elif key == "A":
-		changeFreqEntry()
-	elif key == "B":
-		changeModeEntry()
-	elif key == "C":
-		seekUpEntry()
-	elif key == "D":
-		seekDownEntry()
-	else:
-		numericEntry(key)
-	"""
 try:
 	checkFreq()
 	updateLcd()
