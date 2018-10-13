@@ -97,9 +97,9 @@ def changeMode(step):
 	print(cmd)
 	os.system(cmd)
 
-def changeCtlMode(step):
+def changeCtlMode():
 	global cidx, cmode
-	cidx += step
+	cidx += 1
 	if cidx >= len(CTL_MODES):
 		cidx = 0
 	cmode = CTL_MODES[cidx]
@@ -151,7 +151,8 @@ def changeFreqEntry(key):
 def changeModeEntry(key):
 	global edit
 	edit = False
-	changeMode(1)
+	#changeMode(1)
+	changeCtlMode()
 
 def seekUpEntry(key):
 	global edit, freq, inFreq
@@ -173,7 +174,7 @@ keyMap = {
 	"#": backspaceEntry,
 	"*": decimalEntry,
 	"A": changeFreqEntry,
-	"B": changeCtlMode, #changeModeEntry,
+	"B": changeModeEntry,
 	"C": seekUpEntry,
 	"D": seekDownEntry
 }
