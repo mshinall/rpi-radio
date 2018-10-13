@@ -82,6 +82,7 @@ def startRadio():
 	cmd = "kill `ps -x | grep 'aplay' | grep -v 'grep' | awk '{print $1 }'`"
 	print(cmd)
 	os.system(cmd)
+	time.sleep(1)
 	cmd = "rtl_fm -f " + freqString() + "M -" + sdrMode + " -s 200K -l 1 -r 48K | aplay -t raw -r 48000 -f S16_LE &"
 	print(cmd)
 	os.system(cmd)
@@ -197,7 +198,7 @@ try:
 	updateLcd()
 
 	keypad.registerKeyPressHandler(handleKeyPress)
-	
+
 	startRadio()
 
 	while(True):
