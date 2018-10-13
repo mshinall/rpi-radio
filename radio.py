@@ -19,8 +19,8 @@ COLS = [4,17,27,22]
 ROWS = [6,13,19,26]
 MODES = ["NFM", "WFM", " AM", "LSB", "USB"]
 MNAMES = ["Narrow FM", "Wide FM", "AM", "Lower SSB", "Upper SSB"]
-#SDR_MODES = ["fm", "wbfm", "am", "lsb", "usb"]
-SDR_MODES = ["N", "W", "M", "L", "U"]
+SDR_MODES = ["fm", "wbfm", "am", "lsb", "usb"]
+#SDR_MODES = ["N", "W", "M", "L", "U"]
 UDP_MODES = ["0", "0", "1", "3", "2"]
 UDP_FLAGS = ["N", "W", "M", "L", "U"]
 MBANDS = [12.5, 200, 200, 100, 100]
@@ -82,8 +82,8 @@ def startRadio():
 	cmd = "kill `ps -x | grep 'aplay' | grep -v 'grep' | awk '{print $1 }'`"
 	print(cmd)
 	os.system(cmd)
-	time.sleep(1)
-	cmd = "rtl_fm -f " + freqString() + "M -" + sdrMode + " -s 200K -l 1 -r 48K | aplay -t raw -r 48000 -f S16_LE &"
+	time.sleep(0.2)
+	cmd = "rtl_fm -f " + freqString() + "M -M " + sdrMode + " -s 200K -l 1 -r 48K | aplay -t raw -r 48000 -f S16_LE &"
 	print(cmd)
 	os.system(cmd)
 

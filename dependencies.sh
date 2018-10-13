@@ -18,7 +18,7 @@ pip install \
 
 #git clone https://github.com/osmocom/rtl-sdr.git
 #cd rtl-sdr
-#cmake ../
+#cmake ../ -DINSTALL_UDEV_RULES=ON
 #make
 #sudo make install
 
