@@ -26,7 +26,7 @@ MAX_FREQ = 1700.0000
 MIN_FREQ = 25.0000
 MAX_FREQ_LENGTH = 9
 IN_SAMPLE = 200000
-OUt_SAMPLE = 24000
+OUT_SAMPLE = 24000
 CTL_MODES = ["F", "M", "S", "G", "A"]
 
 freq = 162.4750
@@ -77,7 +77,7 @@ def changeFreq():
 	os.system(cmd)
 
 def startRadio():
-	cmd = "rtl_udp -f " + freqString() + "M -" + flag + " -s " + str(IN_SAMPLE) + " -r " + STR(OUT_SAMPLE) + " | aplay -t raw -r " + STR(OUT_SAMPLE) + " -f S16_LE -c 1"
+	cmd = "rtl_udp -f " + freqString() + "M -" + flag + " -s " + str(IN_SAMPLE) + " -r " + str(OUT_SAMPLE) + " | aplay -t raw -r " + str(OUT_SAMPLE) + " -f S16_LE -c 1"
 	print(cmd)
 	os.system(cmd)
 
