@@ -19,7 +19,8 @@ COLS = [4,17,27,22]
 ROWS = [6,13,19,26]
 MODES = ["NFM", "WFM", " AM", "LSB", "USB"]
 MNAMES = ["Narrow FM", "Wide FM", "AM", "Lower SSB", "Upper SSB"]
-SDR_MODES = ["fm", "wbfm", "am", "lsb", "usb"]
+#SDR_MODES = ["fm", "wbfm", "am", "lsb", "usb"]
+SDR_MODES = ["N", "W", "M", "L", "U"]
 UDP_MODES = ["0", "0", "1", "3", "2"]
 UDP_FLAGS = ["N", "W", "M", "L", "U"]
 MBANDS = [12.5, 200, 200, 100, 100]
@@ -74,7 +75,14 @@ def checkFreq():
 def changeFreq():
 	checkFreq()
 	updateLcd()
-	cmd = os.getcwd() + "/udpclient.py freq " + str(int(freq * 1000000))
+	startRadio()
+
+def startRadio():
+	#cmd = os.getcwd() + "/udpclient.py freq " + str(int(freq * 1000000))
+	cmd = "kill `ps -x | grep 'aplay' | grep -v 'grep' | awk '{print $1 }'`"
+	print(cmd)
+	os.system(cmd)
+	cmd = "rtl_fm -f " + freqString() + "M -" + sdrMode + " -s 200K -l 1 -r 48K | aplay -t raw -r 48000 -f S16_LE &"
 	print(cmd)
 	os.system(cmd)
 
@@ -92,9 +100,7 @@ def changeMode(step):
 	udpMode = UDP_MODES[midx]
 	udpFlag = UDP_FLAGS[midx]
 	updateLcd()
-	cmd = os.getcwd() + "/udpclient.py mode " + udpMode
-	print(cmd)
-	os.system(cmd)
+	startRadio()
 
 """
 def changeCtlMode(step):
@@ -191,14 +197,13 @@ try:
 	updateLcd()
 
 	keypad.registerKeyPressHandler(handleKeyPress)
-	cmd = "rtl_udp -f " + freqString() + "M -" + udpFlag + " -s 200K -l 1 -r 48K | aplay -t raw -r 48000 -f S16_LE"
-	print(cmd)
-	os.system(cmd)
-	"""
+	
+	startRadio()
+
 	while(True):
 		#print("keypad: sleeping...")
 		time.sleep(0.2)
-	"""
+
 except:
 	#print("keypad: cleaning up")
 	keypad.cleanup()
