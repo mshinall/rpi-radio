@@ -89,7 +89,7 @@ def changeMode(step):
 		midx = 0
 
 	mode = MODES[midx]
-	flag = FLAGS[midx]]
+	flag = FLAGS[midx]
 	udpMode = UDP_MODES[midx]
 	udpFlag = UDP_FLAGS[midx]
 	updateLcd()
