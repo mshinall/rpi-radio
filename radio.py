@@ -194,11 +194,9 @@ try:
 	keypad.registerKeyPressHandler(handleKeyPress)
 
 	startRadio()
-	"""
 	while(True):
 		#print("keypad: sleeping...")
 		time.sleep(0.2)
-	"""
 except:
 	#print("keypad: cleaning up")
 	keypad.cleanup()
