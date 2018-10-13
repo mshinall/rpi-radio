@@ -77,7 +77,7 @@ def changeFreq():
 	os.system(cmd)
 
 def startRadio():
-	cmd = "rtl_udp -f " + freqString() + "M -" + flag + " -s " + str(IN_SAMPLE) + " -r " + str(OUT_SAMPLE) + " | aplay -t raw -r " + str(OUT_SAMPLE) + " -f S16_LE -c 1"
+	cmd = "rtl_udp -f " + freqString() + "M -" + udpFlag + " -s " + str(IN_SAMPLE) + " -r " + str(OUT_SAMPLE) + " | aplay -t raw -r " + str(OUT_SAMPLE) + " -f S16_LE -c 1"
 	print(cmd)
 	os.system(cmd)
 
@@ -93,7 +93,7 @@ def changeMode(step):
 	udpMode = UDP_MODES[midx]
 	udpFlag = UDP_FLAGS[midx]
 	updateLcd()
-	cmd = os.getcwd() + "/udpclient.py mode " + str(udpMode)
+	cmd = os.getcwd() + "/udpclient.py mode " + udpMode
 	print(cmd)
 	os.system(cmd)
 
