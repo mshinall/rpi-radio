@@ -27,7 +27,7 @@ MIN_FREQ = 25.0000
 MAX_FREQ_LENGTH = 9
 IN_SAMPLE = 200000
 OUT_SAMPLE = 48000
-CTL_MODES = ["F", "M", "S", "G", "A"]
+CTL_MODES = ["Freq", "Mode", "Squl", "Gain"]
 
 freq = 162.4750
 inFreq = str(freq)
@@ -97,7 +97,6 @@ def changeMode(step):
 	print(cmd)
 	os.system(cmd)
 
-"""
 def changeCtlMode(step):
 	global cidx, cmode
 	cidx += step
@@ -105,7 +104,6 @@ def changeCtlMode(step):
 		cidx = 0
 	cmode = CTL_MODES[cidx]
 	updateLcd()
-"""
 
 def updateLcd():
 	clearLcd()
@@ -118,7 +116,7 @@ def updateLcd():
 	mylcd.lcd_display_string(mode, 2, 0)
 	mylcd.lcd_display_string("s"+str(sql).zfill(2), 2, 4)
 	mylcd.lcd_display_string("g"+str(gain).zfill(2), 2, 8)
-	mylcd.lcd_display_string(cmode, 2, 15)
+	mylcd.lcd_display_string(cmode, 2, 12)
 
 def numericEntry(key):
 	global edit, inFreq
@@ -175,7 +173,7 @@ keyMap = {
 	"#": backspaceEntry,
 	"*": decimalEntry,
 	"A": changeFreqEntry,
-	"B": changeModeEntry,
+	"B": changeCtlMode, #changeModeEntry,
 	"C": seekUpEntry,
 	"D": seekDownEntry
 }
