@@ -17,26 +17,23 @@ MATRIX = [['1', '2', '3', 'A'],
 #BCM numbering
 COLS = [4,17,27,22]
 ROWS = [6,13,19,26]
-MODES = ["NFM", "WFM", " AM", "LSB", "USB"]
-MNAMES = ["Narrow FM", "Wide FM", "AM", "Lower SSB", "Upper SSB"]
-SDR_MODES = ["fm", "wbfm", "am", "lsb", "usb"]
-#SDR_MODES = ["N", "W", "M", "L", "U"]
-UDP_MODES = ["0", "0", "1", "3", "2"]
-UDP_FLAGS = ["N", "W", "M", "L", "U"]
-MBANDS = [12.5, 200, 200, 100, 100]
+MODES = [" FM", " AM", "LSB", "USB"]
+FLAGS = ["fm", "am", "lsb", "usb"]
+UDP_MODES = ["0", "1", "3", "2"]
+UDP_FLAGS = ["N", "M", "L", "U"]
 SEEKW = 0.0125
 MAX_FREQ = 1700.0000
 MIN_FREQ = 25.0000
 MAX_FREQ_LENGTH = 9
+IN_SAMPLE = 200000
+OUt_SAMPLE = 24000
 CTL_MODES = ["F", "M", "S", "G", "A"]
 
 freq = 162.4750
 inFreq = str(freq)
 midx = 0
 mode = MODES[midx]
-mname = MNAMES[midx]
-mband = MBANDS[midx]
-sdrMode = SDR_MODES[midx]
+flag = FLAGS[midx]
 udpMode = UDP_MODES[midx]
 udpFlag = UDP_FLAGS[midx]
 edit = False
@@ -75,33 +72,30 @@ def checkFreq():
 def changeFreq():
 	checkFreq()
 	updateLcd()
-	startRadio()
-
-def startRadio():
-	#cmd = os.getcwd() + "/udpclient.py freq " + str(int(freq * 1000000))
-	cmd = "kill `ps -x | grep 'aplay' | grep -v 'grep' | awk '{print $1 }'`"
+	cmd = os.getcwd() + "/udpclient.py freq " + str(int(freq * 1000000))
 	print(cmd)
 	os.system(cmd)
-	time.sleep(0.2)
-	cmd = "rtl_fm -f " + freqString() + "M -M " + sdrMode + " -s 200K -l 1 -r 48K | aplay -t raw -r 48000 -f S16_LE &"
+
+def startRadio():
+	cmd = "rtl_udp -f " + freqString() + "M -" + flag + " -s " + str(IN_SAMPLE) + " -r " + STR(OUT_SAMPLE) + " | aplay -t raw -r " + STR(OUT_SAMPLE) + " -f S16_LE -c 1"
 	print(cmd)
 	os.system(cmd)
 
 def changeMode(step):
-	global midx, mode, mname, mband, sdrMode, udpMode, udpFlag
+	global midx, mode, flag, udpMode, udpFlag
 
 	midx += step
 	if midx >= len(MODES):
 		midx = 0
 
 	mode = MODES[midx]
-	mname = MNAMES[midx]
-	mband = MBANDS[midx]
-	sdrMode = SDR_MODES[midx]
+	flag = FLAGS[midx]]
 	udpMode = UDP_MODES[midx]
 	udpFlag = UDP_FLAGS[midx]
 	updateLcd()
-	startRadio()
+	cmd = os.getcwd() + "/udpclient.py mode " + str(udpMode)
+	print(cmd)
+	os.system(cmd)
 
 """
 def changeCtlMode(step):
@@ -200,11 +194,11 @@ try:
 	keypad.registerKeyPressHandler(handleKeyPress)
 
 	startRadio()
-
+"""
 	while(True):
 		#print("keypad: sleeping...")
 		time.sleep(0.2)
-
+"""
 except:
 	#print("keypad: cleaning up")
 	keypad.cleanup()
