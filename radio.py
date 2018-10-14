@@ -28,9 +28,11 @@ MAX_FREQ_LENGTH = 9
 IN_SAMPLE = 200000
 OUT_SAMPLE = 48000
 CTL_MODES = ["F", "M", "S", "G"]
-GAIN_SETTINGS = [0.0, 0.9, 1.4, 2.7, 3.7, 7.7, 8.7, 12.5, 14.4, 15.7, 16.6,
- 				19.7, 20.7, 22.9, 25.4, 28.0, 29.7, 32.8, 33.8, 36.4, 37.2,
-				38.6, 40.2, 42.1, 43.4, 43.9, 44.5, 48.0, 49.6]
+GAIN_SETTINGS = ["auto", "0.0", "0.9", "1.4", "2.7", "3.7", "7.7", "8.7",
+				"12.5", "14.4", "15.7", "16.6", "19.7", "20.7", "22.9",
+				"25.4", "28.0", "29.7", "32.8", "33.8", "36.4", "37.2",
+				"38.6", "40.2", "42.1", "43.4", "43.9", "44.5", "48.0",
+				"49.6"]
 
 freq = 162.4750
 inFreq = str(freq)
@@ -67,6 +69,10 @@ def clearLcd():
 	global mylcd
 	mylcd.lcd_clear()
 
+def system(cmd):
+	print(cmd)
+	os.system(cmd)
+
 def checkFreq():
 	global freq
 	if freq > MAX_FREQ:
@@ -77,14 +83,10 @@ def checkFreq():
 def changeFreq():
 	checkFreq()
 	updateLcd()
-	cmd = os.getcwd() + "/udpclient.py freq " + str(int(freq * 1000000))
-	print(cmd)
-	os.system(cmd)
+	system(os.getcwd() + "/udpclient.py freq " + str(int(freq * 1000000)))
 
 def startRadio():
-	cmd = "rtl_udp -f " + freqString() + "M -" + udpFlag + " -s " + str(IN_SAMPLE) + " -r " + str(OUT_SAMPLE) + " | aplay -t raw -r " + str(OUT_SAMPLE) + " -f S16_LE -c 1"
-	print(cmd)
-	os.system(cmd)
+	system("rtl_udp -f " + freqString() + "M -" + udpFlag + " -s " + str(IN_SAMPLE) + " -r " + str(OUT_SAMPLE) + " | aplay -t raw -r " + str(OUT_SAMPLE) + " -f S16_LE -c 1")
 
 def changeMode(step):
 	global midx, mode, flag, udpMode, udpFlag
@@ -100,31 +102,28 @@ def changeMode(step):
 	udpMode = UDP_MODES[midx]
 	udpFlag = UDP_FLAGS[midx]
 	updateLcd()
-	cmd = os.getcwd() + "/udpclient.py mode " + udpMode
-	print(cmd)
-	os.system(cmd)
-
+	system(os.getcwd() + "/udpclient.py mode " + udpMode)
 
 def changeSquelch(step):
 	global sql
 	sql += step
 	updateLcd()
-	cmd = os.getcwd() + "/udpclient.py squelch " + str(int(sql))
-	print(cmd)
-	os.system(cmd)
+	system(os.getcwd() + "/udpclient.py squelch " + str(int(sql)))
 
 def changeGain(step):
 	global gain, gidx
 	gidx += step
-	gain = GAIN_SETTINGS[gidx]
 	if gidx >= len(GAIN_SETTINGS):
 		gidx = 0
 	elif gidx < 0:
 		gidx = GAIN_SETTINGS[len(GAIN_SETTINGS)-1]
+	gain = GAIN_SETTINGS[gidx]
 	updateLcd()
-	cmd = os.getcwd() + "/udpclient.py gain " + str(int(gain))
-	print(cmd)
-	os.system(cmd)
+	system(os.getcwd() + "/udpclient.py gain " + str(int(gain)))
+	if gidx == 0:
+		system(os.getcwd() + "/udpclient.py agc on")
+	else:
+		system(os.getcwd() + "/udpclient.py agc off")
 
 def changeCtlMode():
 	global cidx, cmode
@@ -144,7 +143,7 @@ def updateLcd():
 	mylcd.lcd_display_string("MHz", 1, 10)
 	mylcd.lcd_display_string(mode, 2, 0)
 	mylcd.lcd_display_string("s"+str(sql).zfill(2), 2, 4)
-	mylcd.lcd_display_string("g"+str(gain).zfill(2), 2, 8)
+	mylcd.lcd_display_string("g"+gain, 2, 8)
 	mylcd.lcd_display_string(cmode, 2, 15)
 
 def numericEntry(key):
