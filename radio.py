@@ -86,6 +86,7 @@ def changeFreq():
 	system(os.getcwd() + "/udpclient.py freq " + str(int(freq * 1000000)))
 
 def startRadio():
+	system("amixer set PCM -- 400")
 	system("rtl_udp -f " + freqString() + "M -" + udpFlag + " -s " + str(IN_SAMPLE) + " -r " + str(OUT_SAMPLE) + " | aplay -t raw -r " + str(OUT_SAMPLE) + " -f S16_LE -c 1")
 
 def changeMode(step):
