@@ -28,6 +28,7 @@ MAX_FREQ_LENGTH = 9
 IN_SAMPLE = 200000
 OUT_SAMPLE = 48000
 CTL_MODES = ["F", "M", "S", "G"]
+GAIN_SETTINGS[0.0, 0.9, 1.4, 2.7, 3.7, 7.7, 8.7, 12.5, 14.4, 15.7, 16.6, 19.7, 20.7, 22.9, 25.4, 28.0, 29.7, 32.8, 33.8, 36.4, 37.2, 38.6, 40.2, 42.1, 43.4, 43.9, 44.5, 48.0, 49.6]
 
 freq = 162.4750
 inFreq = str(freq)
@@ -42,8 +43,10 @@ process2 = 0
 cidx = 0
 cmode = CTL_MODES[cidx]
 sql = 0
-gain = 0
+gidx = 0
+gain = GAIN_SETTINGS[gidx]
 agc = True
+
 
 mylcd = I2C_LCD_driver.lcd()
 factory = rpi_gpio.KeypadFactory()
@@ -87,6 +90,8 @@ def changeMode(step):
 	midx += step
 	if midx >= len(MODES):
 		midx = 0
+	elif midx < 0:
+		midx = MODES[len(MODES)-1]
 
 	mode = MODES[midx]
 	flag = FLAGS[midx]
@@ -108,7 +113,12 @@ def changeSquelch(step):
 
 def changeGain(step):
 	global gain
-	gain += step
+	gidx += step
+	gain = GAIN_SETTINGS[gidx]
+	if gidx >= len(GAIN_SETTINGS):
+		gidx = 0
+	elif gidx < 0:
+		gidx = GAIN_SETTINGS[len(GAIN_SETTINGS)-1]
 	updateLcd()
 	cmd = os.getcwd() + "/udpclient.py gain " + str(int(gain))
 	print(cmd)
