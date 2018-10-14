@@ -119,7 +119,7 @@ def changeGain(step):
 		gidx = GAIN_SETTINGS[len(GAIN_SETTINGS)-1]
 	gain = GAIN_SETTINGS[gidx]
 	updateLcd()
-	system(os.getcwd() + "/udpclient.py gain " + str(int(gain)))
+	system(os.getcwd() + "/udpclient.py gain " + gain)
 	if gidx == 0:
 		system(os.getcwd() + "/udpclient.py agc on")
 	else:
