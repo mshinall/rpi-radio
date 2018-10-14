@@ -116,7 +116,7 @@ def updateLcd():
 	mylcd.lcd_display_string(mode, 2, 0)
 	mylcd.lcd_display_string("s"+str(sql).zfill(2), 2, 4)
 	mylcd.lcd_display_string("g"+str(gain).zfill(2), 2, 8)
-	mylcd.lcd_display_string(cmode, 2, 12)
+	mylcd.lcd_display_string(cmode, 2, 15)
 
 def numericEntry(key):
 	global edit, inFreq
@@ -157,11 +157,19 @@ def changeModeEntry(key):
 def seekUpEntry(key):
 	global edit, freq, inFreq
 	edit = False
-
-	freq = freq + SEEKW
-	checkFreq()
-	inFreq = freqString()
-	changeFreq()
+	if cmode == "F":
+		freq = freq + SEEKW
+		checkFreq()
+		inFreq = freqString()
+		changeFreq()
+	elif cmode == "M":
+		changeMode(1)
+	elif cmode == "S":
+		sql += 1
+		updateLcd()
+	elif cmode == "G":
+		gain += 1
+		updateLcd()
 
 def seekDownEntry(key):
 	global edit, freq, inFreq, sql, gain
