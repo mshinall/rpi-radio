@@ -97,6 +97,23 @@ def changeMode(step):
 	print(cmd)
 	os.system(cmd)
 
+
+def changeSquelch(step):
+	global sql
+	sql += step
+	updateLcd()
+	cmd = os.getcwd() + "/udpclient.py squelch " + str(int(sql))
+	print(cmd)
+	os.system(cmd)
+
+def changeGain(step):
+	global gain
+	gain += step
+	updateLcd()
+	cmd = os.getcwd() + "/udpclient.py gain " + str(int(gain))
+	print(cmd)
+	os.system(cmd)
+
 def changeCtlMode():
 	global cidx, cmode
 	cidx += 1
@@ -165,11 +182,9 @@ def seekUpEntry(key):
 	elif cmode == "M":
 		changeMode(1)
 	elif cmode == "S":
-		sql += 1
-		updateLcd()
+		changeSquelch(1)
 	elif cmode == "G":
-		gain += 1
-		updateLcd()
+		changeGain(1)
 
 def seekDownEntry(key):
 	global edit, freq, inFreq, sql, gain
@@ -182,11 +197,9 @@ def seekDownEntry(key):
 	elif cmode == "M":
 		changeMode(-1)
 	elif cmode == "S":
-		sql -= 1
-		updateLcd()
+		changeSquelch(-1)
 	elif cmode == "G":
-		gain -= 1
-		updateLcd()
+		changeGain(-1)
 
 keyMap = {
 	"#": backspaceEntry,
