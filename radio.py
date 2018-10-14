@@ -27,7 +27,7 @@ MIN_FREQ = 25.0000
 MAX_FREQ_LENGTH = 9
 IN_SAMPLE = 200000
 OUT_SAMPLE = 48000
-CTL_MODES = ["Freq", "Mode", "Squl", "Gain"]
+CTL_MODES = ["F", "M", "S", "G"]
 
 freq = 162.4750
 inFreq = str(freq)
@@ -157,18 +157,28 @@ def changeModeEntry(key):
 def seekUpEntry(key):
 	global edit, freq, inFreq
 	edit = False
+
 	freq = freq + SEEKW
 	checkFreq()
 	inFreq = freqString()
 	changeFreq()
 
 def seekDownEntry(key):
-	global edit, freq, inFreq
+	global edit, freq, inFreq, sql, gain
 	edit = False
-	freq = freq - SEEKW
-	checkFreq()
-	inFreq = freqString()
-	changeFreq()
+	if cmode == "F":
+		freq = freq - SEEKW
+		checkFreq()
+		inFreq = freqString()
+		changeFreq()
+	elif cmode == "M":
+		changeMode(-1)
+	elif cmode == "S":
+		sql -= 1
+		updateLcd()
+	elif cmode == "G":
+		gain -= 1
+		updateLcd()
 
 keyMap = {
 	"#": backspaceEntry,
