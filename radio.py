@@ -155,7 +155,7 @@ def changeModeEntry(key):
 	changeCtlMode()
 
 def seekUpEntry(key):
-	global edit, freq, inFreq
+	global edit, freq, inFreq, sql, gain
 	edit = False
 	if cmode == "F":
 		freq = freq + SEEKW
