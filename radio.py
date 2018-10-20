@@ -15,9 +15,9 @@ MATRIX = [['1', '2', '3', 'A'],
 		  ['*', '0', '#', 'D']]
 
 #BCM numbering
-COLS = [4,17,27,22]
-ROWS = [6,13,19,26]
-MODES = [" FM", " AM", "LSB", "USB"]
+ROWS = [4,17,27,22]
+COLS = [6,13,19,26]
+MODES = ["FM", "AM"] #, "LSB", "USB"]
 FLAGS = ["fm", "am", "lsb", "usb"]
 UDP_MODES = ["0", "1", "3", "2"]
 UDP_FLAGS = ["N", "M", "L", "U"]
@@ -27,7 +27,7 @@ MIN_FREQ = 25.0000
 MAX_FREQ_LENGTH = 9
 IN_SAMPLE = 200000
 OUT_SAMPLE = 48000
-CTL_MODES = ["F", "M", "S", "G"]
+CTL_MODES = ["F", "M", "S", "G", "V"]
 GAIN_SETTINGS = ["auto", "0", "9", "14", "27", "37", "77", "87",
 				"125", "144", "157", "166", "197", "207", "229",
 				"254", "280", "297", "328", "338", "364", "372",
