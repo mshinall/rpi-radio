@@ -15,8 +15,10 @@ MATRIX = [['1', '2', '3', 'A'],
 		  ['*', '0', '#', 'D']]
 
 #BCM numbering
-ROWS = [4,17,27,22]
-COLS = [6,13,19,26]
+#ROWS = [4,17,27,22]
+#COLS = [6,13,19,26]
+ROWS = [22,27,17,4]
+COLS = [26,19,13,6]
 MODES = ["FM", "AM"] #, "LSB", "USB"]
 FLAGS = ["fm", "am", "lsb", "usb"]
 UDP_MODES = ["0", "1", "3", "2"]
